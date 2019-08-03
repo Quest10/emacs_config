@@ -185,13 +185,31 @@ Inmediatamente tras instalar no surte efecto.
 #+END_SRC
 
 * Trabajando con marcadores
+  Emacs permite, de serie, recordar el punto exacto en el que se está trabajando en un archivo e incluso asignarle un nombre con: C-x r m {nombre_del_marcador} <RET>
+  Al hacer referencia al punto concreto del documento en el que se guarda el marcador, se pueden tener distintos marcadores del mismo archivo, siempre que no se llamen igual. Si se llaman igual el último con ese nombre sobreescribirá al anterior. Para evitarlo se ha de usar: C-x r M {nombre_del_marcador} <RET>
+  Atajos de teclado para trabajar con marcadores:
+| Atajo                               | Funcionalidad                        |
+|-------------------------------------+--------------------------------------|
+| C-x r m {nombre_del_marcador} <RET> | Guarda el marcador                   |
+| C-x r M {nombre_del_marcador} <RET> | Guarda el marcador sin sobreescribir |
+| C-x r b {nombre_del_marcador} <RET> | Salta al marcador con ese nombre     |
+| C-x r l                             | Lista todos los marcadores           |
+
+  Por defecto los marcadores se deben de guardar manualmente (M-x bookmark-save). En nuestro caso se establece un archivo para guardar los marcadores por defecto, y que estos se guarden con cada nueva variación.
+  
 #+BEGIN_SRC lisp
-;; definición de marcadores y guardado automático
+;; Set default bookmark file and auto-saving
 (setq bookmark-default-file "~/.emacs.d/bookmarks")
 (setq bookmark-save-flag 1)
-
 #+END_SRC
 
+  Al arrancar puede ser útil ver un listado de los marcadores guardados. Se abre esta lista mediante la siguiente configuración extraida de [[http://ergoemacs.org/emacs/bookmark.html][Xah Lee]]:
+#+BEGIN_SRC lisp
+(require 'bookmark)
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
+#+END_SRC 
+** TODO estudiar la utilidad de funcionalidades extra ofrecidas por bookmark-plus
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker
@@ -259,7 +277,6 @@ Inmediatamente tras instalar no surte efecto.
 * Variables de personalizadas controladas por Emacs
 
 #+BEGIN_SRC lisp
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -275,5 +292,4 @@ Inmediatamente tras instalar no surte efecto.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
 #+END_SRC

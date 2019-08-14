@@ -1,54 +1,90 @@
 
-* Error "markdown failed with exit code 127"
-  Se instala el modo markdown-mode. Para que funcione la previsualización hay que instalar markdown
-#+BEGIN_SRC 
-brew install markdown
-#+END_SRC
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
 
-Inmediatamente tras instalar no surte efecto.
-
-** Referencia https://stackoverflow.com/questions/50452924/markdown-preview-in-emacs-fails-pandoc-error-127
-* Lista de ideas
-** TODO Mapear tecla rápida para abrir/cerrar shell
-   Se abrirá en la parte inferior a 1/3 de la ventana (aprox).
-   - ¿Cómo se mapea?
-   - ¿Qué shell usar? eshell parece la más interesante pero no carga el perfil de bash. ¿Alguna forma de cargarlo?
-   - ¿Cómo respetar la proporción de ventanas? ¿Se pueden guardar "diseños" de ventanas?
-** DONE Mapear tecla rápida para abrir/cerrar ventana de dired
-
-#+BEGIN_SRC lisp
-(global-set-key (kbd "<f3>") 'dired-sidebar-toggle-sidebar)
-#+END_SRC   
 * Programación literada
 
-  Un poco de documentación en el inicio del archivo de carga. El enfoque literado sobre un archivo permite documentar mejor no sólo las funcionalidades sino el curso de los pensamientos del desarrollo. En este caso se parte de una copia de un archivo de configuración de emacs funcional. El objetivo es crear un archivo de org-mode que genere un archivo de configuración de emacs.
-
-#+BEGIN_SRC lisp
-
-;;Configuración de Emacs para Mac
-;;Gerardo Diez García
-;;2018-2019
-;;Fuentes: https://github.com/cmacrae/.emacs.d/
-
-
-;;TODO List
-;;Programación literada
-;;Implementación de descarga e instalación de los paquetes si no están instalados (fonts hay que descargarlos a mano)
-;;
-
+  Un poco de documentación en el inicio del archivo de carga. El enfoque literado sobre un archivo permite documentar mejor no sólo las funcionalidades sino el curso de los pensamientos del desarrollo. En este caso se parte de una copia de un archivo de configuración de emacs funcional. El objetivo es crear un archivo de org-mode que encapsule un archivo de configuración de emacs. La configuración inicial hace un uso intensivo, aunque no exclusivo, de la configuración empleada por [[ https://github.com/cmacrae/.emacs.d/][MacRae]]. Para la carga de esta configuración existen dos opciones:
+  - Generar un archivo de inicio mínimo que haga la carga de los bloques de código de otros archivos de Org como el del ejemplo (extraído de la configuración de [[https://github.com/seth/my-emacs-dot-d][Seth]]):
+#+BEGIN_EXAMPLE
+(org-babel-load-file
+(expand-file-name "example-emacs-init.org"
+                 user-emacs-directory))
+#+END_EXAMPLE
+  - Generar uno o varios archivos de configuración de código lisp a partir de los fragmentos de código presentes en el código.
+   
+  La primera opción funciona a partir de la versión 24 de Emacs, porque trae ya incluido Org Mode. Prefiero evitar esta opción porque genera una dispersión innecesaria de los archivos de configuración (al menos se necesitan 2 archivos) y uno queda fuera del sistema de documentación de Org. Además la interpretación al vuelo por parte de OrgMode de los fragmentos de código exige que este, OrgMode, se cargue al inicio del archivo de configuración. Esto "rompe" en cierta manera la lógica de la configuración a la hora de documentarla.
+  La segunda opción hace uso de la opción de "tangle" de OrgMode. Esta opción permite mediante la ejecución de "org-babel-tangle" la exportación de los trozos de códigos presentes en el texto a un archivo del lenguaje al que pertenece el lenguaje. Por defecto creará un archivo, en el mismo directorio,con el mismo nombre del archivo org, cambiando la extensión a la del lenguaje. Para generar un archivo con un nombre y directorio concretos se deberá crear una cabecera como la del ejemplo:
+#+BEGIN_EXAMPLE
+#+PROPERTY: header-args :tangle ~/.emacs.d/init_test.el
+#+END_EXAMPLE
+  Esta cabecera tendrá efecto sobre todos los fragmentos del código salvo los que expresamente se excluyan como:
+#+BEGIN_EXAMPLE
+#+HEADER: :tangle no
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/Documents/TODO List.org")))
+ '(package-selected-packages
+   (quote
+    (markdown-mode magit indent-guide all-the-icons-dired docker-tramp dockerfile-mode yaml-mode doom-themes spaceline-all-the-icons use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 #+END_SRC
-  Con una programación funcional basada en archivos de Org-Mode se pueden manejar mejor de manera más inteligente las tareas por hacer (TODO) ya que permite el resaltado de palabras clave configurables.
+#+END_EXAMPLE
+  En caso de que la cabecera general cambie (apuntando a otro archivo) habrá que poner el cursor sobre dicha cabecera y ejecutar C-c C-c para refrescar el setup local. De otra manera OrgMode cacheará las preferencias y seguirá generando el archivo original.
+  En un futuro se puede optar por distribuir el código en distintos fragmentos. Se puede seleccionar el destino de los distintos fragmentos cambiando la cabecera con el nombre del archivo de destino, como por ejemplo:
+#+BEGIN_EXAMPLE
+#+HEADER: :tangle ~/.emacs.d/custom.el
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/Documents/TODO List.org")))
+ '(package-selected-packages
+   (quote
+    (markdown-mode magit indent-guide all-the-icons-dired docker-tramp dockerfile-mode yaml-mode doom-themes spaceline-all-the-icons use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+#+END_SRC
+#+END_EXAMPLE
+
+  Con una programación literada basada en archivos de Org-Mode se pueden manejar mejor de manera más inteligente las tareas por hacer (TODO) ya que:
+  - permite el resaltado de palabras clave configurables, asignándolas a tareas o puntos concretos.
+  - la documentación puede extenderse con enlaces, tablas (para presentar atajos de teclado, por ejemplo) sin la necesidad de comentar la región. Por esto la documentación puede ser mucho más extensa de manera natural, pudiendo incluir no sólo las razones por las que se elige una documentación u otra, sino crear una especie de manual de la configuración (y de Emacs)
+  - se puede ir comprobando la valided del código antes de exportarlo al archivo final evaluando los fragmentos de manera individual
+  
   Esta programación no debiera evitar los comentarios ya que la idea es generar un archivo completo en lisp. Cosas erroneas que han de cambiarse en la cabecera (y resto del código):
 
   - Comentarios en castellano: Adopto la tesis de @adirael la documentación del código y los commits debieran estar en inglés
   - Todo es mejor con una licencia: Deja claro en los términos en los que se va a poder reutilizar el código. Se elige la lícencia MIT por simplicidad y la libertad que da. Elección gracias a https://choosealicense.com/
   
-  La configuración inicial hace un uso intensivo de la configuración empleada por [[ https://github.com/cmacrae/.emacs.d/][MacRae]]
+
+
+#+BEGIN_SRC emacs-lisp
+
+;;Personal configuration for Emacs
+;;Gerardo Diez García
+;;2018-2019
+
+#+END_SRC
 * Uso de paquetes
 
   Como todo gran sistema operativo, Emacs ha desarrollado desde las últimas versiones un sistema de paquetes que permite la instalación de extensiones desarrolladas por la comunidad
 
-#+BEGIN_SRC lisp 
+#+BEGIN_SRC emacs-lisp 
 
 ;;Prólogo cargador de paquetes básicos macrae
 (require 'package)
@@ -66,79 +102,81 @@ Inmediatamente tras instalar no surte efecto.
 
 * Estilo visual
 
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 
-;; inhibición de la pantalla de inicio
-(setq inhibit-startup-screen t)
-;; permite usar el alt - derecho de manera estandar
-(setq mac-right-option-modifier nil)
-;; deshabilita la barra de iconos
-(tool-bar-mode -1)
-;; abre todos los archivos en un mismo frame
-(setq ns-pop-up-frames nil)
-;; ajuste de línea
-(global-visual-line-mode 1)
-
-
-;; algo de estilo con colores por defecto
-;;(load-theme 'misterioso)
+  ;; inhibición de la pantalla de inicio
+  (setq inhibit-startup-screen t)
+  ;; permite usar el alt - derecho de manera estandar
+  (setq mac-right-option-modifier nil)
+  ;; deshabilita la barra de iconos
+  (tool-bar-mode -1)
+  ;; abre todos los archivos en un mismo frame
+  (setq ns-pop-up-frames nil)
+  ;; ajuste de línea
+  (global-visual-line-mode 1)
 
 
-;; carga de temas macrae
-(use-package doom-themes
-  :after (spaceline)
-  :init
-  (setq
-      doom-themes-enable-bold t
-      doom-themes-enable-italic t
-      doom-one-brighter-comments t
-      doom-neotree-file-icons t)
-  (load-theme 'doom-one t)
-  :config
-  (doom-themes-neotree-config))
-
-;; spaceline macrae
-(use-package spaceline
-  :init
-  (require 'spaceline-config)
-  (spaceline-emacs-theme))
+  ;; algo de estilo con colores por defecto
+  ;;(load-theme 'misterioso)
 
 
-;; comentado hasta que se solucione bug: https://github.com/domtronn/spaceline-all-the-icons.el/issues/100
-;; (use-package spaceline-all-the-icons
-;;   :after spaceline
-;;   :config
-;;   (spaceline-all-the-icons-theme)
-;;   (spaceline-all-the-icons--setup-git-ahead)
-;;   (spaceline-toggle-all-the-icons-buffer-size-off)
-;;   (spaceline-toggle-all-the-icons-hud-off)
-;;   (spaceline-toggle-all-the-icons-vc-icon-off)
-;;   (setq spaceline-all-the-icons-separator-type 'wave))
+  ;; carga de temas macrae
+  (use-package doom-themes
+    :after (spaceline)
+    :init
+    (setq
+	doom-themes-enable-bold t
+	doom-themes-enable-italic t
+	doom-one-brighter-comments t
+	doom-neotree-file-icons t)
+    (load-theme 'doom-one t)
+    :config
+    (doom-themes-neotree-config))
+
+  ;; spaceline macrae
+  (use-package spaceline
+    :init
+    (require 'spaceline-config)
+    (spaceline-emacs-theme))
+
+
+    (use-package spaceline-all-the-icons
+    :after spaceline
+    :config
+    (spaceline-all-the-icons-theme)
+    (spaceline-all-the-icons--setup-git-ahead)
+    (spaceline-toggle-all-the-icons-buffer-size-off)
+    (spaceline-toggle-all-the-icons-hud-off)
+    (spaceline-toggle-all-the-icons-vc-icon-off)
+    (setq spaceline-all-the-icons-separator-type 'wave))
 
 
 
-;; iconitos (macrae)
-(use-package all-the-icons
-  :init
-  (cond
-   ((string-equal system-type "gnu/linux")
-    (if (not
-      (file-exists-p (concat (getenv "XDG_DATA_HOME") "/fonts/all-the-icons.ttf")))
-      (all-the-icons-install-fonts "t")))
-   ((string-equal system-type "darwin")
-     (if (not
-      (file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf")))
-      (all-the-icons-install-fonts "t")))))
+  ;; iconitos (macrae)
+  (use-package all-the-icons
+    :init
+    (cond
+     ((string-equal system-type "gnu/linux")
+      (if (not
+	(file-exists-p (concat (getenv "XDG_DATA_HOME") "/fonts/all-the-icons.ttf")))
+	(all-the-icons-install-fonts "t")))
+     ((string-equal system-type "darwin")
+       (if (not
+	(file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf")))
+	(all-the-icons-install-fonts "t")))))
 
-(use-package all-the-icons-dired
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
+  (use-package all-the-icons-dired
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
 
 #+END_SRC
 
+#+RESULTS:
+| all-the-icons-dired-mode |
+
 * Comportamiento como editor
 
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 
 ;; sobreescritura de la region seleccionada
 (delete-selection-mode 1)
@@ -197,24 +235,44 @@ Inmediatamente tras instalar no surte efecto.
 
   Por defecto los marcadores se deben de guardar manualmente (M-x bookmark-save). En nuestro caso se establece un archivo para guardar los marcadores por defecto, y que estos se guarden con cada nueva variación.
   
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 ;; Set default bookmark file and auto-saving
 (setq bookmark-default-file "~/.emacs.d/bookmarks")
 (setq bookmark-save-flag 1)
 #+END_SRC
 
   Al arrancar puede ser útil ver un listado de los marcadores guardados. Se abre esta lista mediante la siguiente configuración extraida de [[http://ergoemacs.org/emacs/bookmark.html][Xah Lee]]:
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 (require 'bookmark)
 (bookmark-bmenu-list)
 (switch-to-buffer "*Bookmark List*")
 #+END_SRC 
 ** TODO estudiar la utilidad de funcionalidades extra ofrecidas por bookmark-plus
+
+* OrgMode
+
+#+BEGIN_SRC emacs-lisp
+
+;; ORG MODE
+(eval-after-load 'org
+'(progn
+(add-to-list 'org-structure-template-alist
+             '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
+
+
+;; ajustes estados TODO list
+(setq org-todo-keywords
+  '(
+(sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
+;;(sequence "SENT" "APPROVED" "|" "PAID")
+))
+
+#+END_SRC
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker
 
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 ;; DOCKER (macrae)
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
@@ -236,7 +294,7 @@ Inmediatamente tras instalar no surte efecto.
 #+END_SRC
 ** K8S
 
-#+BEGIN_SRC lisp
+#+BEGIN_SRC emacs-lisp 
 
 ;; K8S (macrae)
 (use-package kubernetes
@@ -253,30 +311,38 @@ Inmediatamente tras instalar no surte efecto.
     ("d" kubernetes-describe-popup "Describe")))
 
 #+END_SRC
+** Markdown
+   Se instala el modo markdown-mode. Para que funcione la previsualización tiene que existir markdown en el sistema. En caso de no existir se mostrará el siguiente error.
+*** Error "markdown failed with exit code 127"
 
-* OrgMode
+  #+BEGIN_SRC 
+  brew install markdown
+  #+END_SRC
 
-#+BEGIN_SRC lisp 
+  Inmediatamente tras instalar no surte efecto.
 
-;; ORG MODE
-(eval-after-load 'org
-'(progn
-(add-to-list 'org-structure-template-alist
-             '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
+**** Referencia https://stackoverflow.com/questions/50452924/markdown-preview-in-emacs-fails-pandoc-error-127
+* Lista de ideas
+** TODO Mapear tecla rápida para abrir/cerrar shell
+   Se abrirá en la parte inferior a 1/3 de la ventana (aprox).
+   - ¿Cómo se mapea?
+   - ¿Qué shell usar? eshell parece la más interesante pero no carga el perfil de bash. ¿Alguna forma de cargarlo?
+   - ¿Cómo respetar la proporción de ventanas? ¿Se pueden guardar "diseños" de ventanas?
+** TODO Implementación de descarga e instalación de los paquetes si no están instalados (fonts hay que descargarlos a mano)
+** DONE Mapear tecla rápida para abrir/cerrar ventana de dired
 
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f3>") 'dired-sidebar-toggle-sidebar)
+#+END_SRC   
 
-;; ajustes estados TODO list
-(setq org-todo-keywords
-  '(
-(sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
-;;(sequence "SENT" "APPROVED" "|" "PAID")
-))
-
-#+END_SRC
-
-* Variables de personalizadas controladas por Emacs
-
-#+BEGIN_SRC lisp
+* Fuentes:
+** Configuraciones:
+   - [[https://github.com/cmacrae/.emacs.d/][MacRae]]: Configuraciones para Mac y configuración de la apariencia moderna.
+   - [[https://github.com/seth/my-emacs-dot-d][Seth]]: Ejemplo de configuración a partir de un init que interpreta el código en un archivo de org. Funciones interesantes como la de [[https://github.com/seth/my-emacs-dot-d/blob/master/emacs-init.org#magic-timestamps-sure-why-not][auto-timestamps]]
+* Variables de personalización controladas por Emacs
+  Emacs tiene un sistema de personalización mediante menús. Cuando este se usa, Emacs genera al final del archivo de configuración una entrada como la siguiente:
+#+HEADER: :tangle no
+#+BEGIN_SRC emacs-lisp
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -293,3 +359,12 @@ Inmediatamente tras instalar no surte efecto.
  ;; If there is more than one, they won't work right.
  )
 #+END_SRC
+
+#+RESULTS:
+
+  Prefiero tener estos ajustes en un archivo diferenciado y que Emacs no toque un archivo que edite yo a mano
+#+BEGIN_SRC emacs-lisp
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+#+END_SRC
+  

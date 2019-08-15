@@ -268,6 +268,29 @@
 ))
 
 #+END_SRC
+
+** Ejecución de código: Babel
+   OrgMode mediante Babel permite interpretar distintos [[https://orgmode.org/worg/org-contrib/babel/languages.html][lenguajes]]. Algunos lenguajes, como el propio emacs-lisp, vienen habilitados por defecto y no requieren de dependencias adicionales. Para habilitar otros lenguajes se incluye el siguiente código (y se revisan las dependencias que tiene cada lenguaje para su ejecución)
+
+#+BEGIN_SRC emacs-lisp
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+ (awk . t)
+ (C . t)
+ (ditaa . t)
+ (emacs-lisp . t)
+ (dot . t)
+ (python . t)
+ (shell . t)
+ (sql . t)
+ (sqlite . t)
+ )
+)
+#+END_SRC
+
+
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker

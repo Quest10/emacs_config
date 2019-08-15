@@ -143,6 +143,22 @@
 ;;(sequence "SENT" "APPROVED" "|" "PAID")
 ))
 
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+ (awk . t)
+ (C . t)
+ (ditaa . t)
+ (emacs-lisp . t)
+ (dot . t)
+ (python . t)
+ (shell . t)
+ (sql . t)
+ (sqlite . t)
+ )
+)
+
 ;; DOCKER (macrae)
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")

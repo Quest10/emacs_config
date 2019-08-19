@@ -306,13 +306,10 @@ Source:
   (sql . t)
   (sqlite . t)
   )
- )
+
  #+END_SRC
 
- #+RESULTS:
-
-
-
+ 
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker

@@ -152,6 +152,7 @@
  (ditaa . t)
  (emacs-lisp . t)
  (dot . t)
+ (js . t)
  (python . t)
  (shell . t)
  (sql . t)

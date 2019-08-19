@@ -6,7 +6,7 @@
  '(org-agenda-files (quote ("~/Documents/TODO List.org")))
  '(package-selected-packages
    (quote
-    (markdown-mode magit indent-guide all-the-icons-dired docker-tramp dockerfile-mode yaml-mode doom-themes spaceline-all-the-icons use-package))))
+    (exec-path-from-shell markdown-mode magit indent-guide all-the-icons-dired docker-tramp dockerfile-mode yaml-mode doom-themes spaceline-all-the-icons use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

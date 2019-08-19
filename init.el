@@ -143,6 +143,14 @@
 ;;(sequence "SENT" "APPROVED" "|" "PAID")
 ))
 
+;; inherit shell variables correctly
+;; now we can load node fine
+(use-package exec-path-from-shell
+  :ensure t
+  :if (memq window-system '(mac ns x))
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -152,6 +160,7 @@
  (ditaa . t)
  (emacs-lisp . t)
  (dot . t)
+ (js . t)
  (python . t)
  (shell . t)
  (sql . t)

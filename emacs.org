@@ -1,5 +1,7 @@
 
-#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
+#+PROPERTY: header-args :tangle ./init.el
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="rethink.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
 
 * Programación literada
 
@@ -77,26 +79,36 @@
 
 ;;Personal configuration for Emacs
 ;;Gerardo Diez García
-;;2018-2019
+;;2018-2020
 
 #+END_SRC
+
+
 * Uso de paquetes
 
-  Como todo gran sistema operativo, Emacs ha desarrollado desde las últimas versiones un sistema de paquetes que permite la instalación de extensiones desarrolladas por la comunidad
+  Como todo gran sistema operativo, Emacs ha desarrollado desde las últimas versiones un sistema de paquetes que permite la instalación de extensiones desarrolladas por la comunidad.
+  
 
 #+BEGIN_SRC emacs-lisp 
 
-;;Prólogo cargador de paquetes básicos macrae
+;; Init use of package
 (require 'package)
-(setq package-enable-at-startup nil)
-(unless (assoc-default "melpa" package-archives)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 (package-initialize)
+
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-(package-install 'use-package))
+  (package-install 'use-package))
+
+
+;; Ensure always the use of "use-package"
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Add another repos
+(unless (assoc-default "melpa" package-archives)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 
 #+END_SRC
 
@@ -309,7 +321,6 @@ Source:
 
  #+END_SRC
 
- 
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker

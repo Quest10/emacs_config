@@ -1,18 +1,25 @@
 ;;Personal configuration for Emacs
 ;;Gerardo Diez García
-;;2018-2019
+;;2018-2020
 
-;;Prólogo cargador de paquetes básicos macrae
+;; Init use of package
 (require 'package)
-(setq package-enable-at-startup nil)
-(unless (assoc-default "melpa" package-archives)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 (package-initialize)
+
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-(package-install 'use-package))
+  (package-install 'use-package))
+
+
+;; Ensure always the use of "use-package"
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Add another repos
+(unless (assoc-default "melpa" package-archives)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 
 ;; inhibición de la pantalla de inicio
 (setq inhibit-startup-screen t)
@@ -166,7 +173,6 @@
  (sql . t)
  (sqlite . t)
  )
-)
 
 ;; DOCKER (macrae)
 (use-package dockerfile-mode

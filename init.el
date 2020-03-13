@@ -77,7 +77,7 @@
   (cond
    ((string-equal system-type "gnu/linux")
     (if (not
-      (file-exists-p (concat (getenv "XDG_DATA_HOME") "/fonts/all-the-icons.ttf")))
+      (file-exists-p (concat (getenv "HOME") "/.fonts/all-the-icons.ttf")))
       (all-the-icons-install-fonts "t")))
    ((string-equal system-type "darwin")
      (if (not

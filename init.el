@@ -2,24 +2,26 @@
 ;;Gerardo Diez García
 ;;2018-2020
 
+(setq warning-minimum-level :error)
+
 ;; Init use of package
 (require 'package)
 (package-initialize)
 
+
+;; Add another repos, so we can install use-package
+(unless (assoc-default "melpa" package-archives)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-
 ;; Ensure always the use of "use-package"
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-;; Add another repos
-(unless (assoc-default "melpa" package-archives)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+(setq package-enable-at-startup nil)
 
 ;; inhibición de la pantalla de inicio
 (setq inhibit-startup-screen t)

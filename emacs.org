@@ -83,7 +83,11 @@
 
 #+END_SRC
 
-
+* Estableciendo la verbosidad del arranque
+  Por defecto Emacs establece el nivel de warning a la hora del arranque. Por eso se pueden confundir los [[https://github.com/Quest10/emacs_config/issues/1#issue-580735051][warnings con errores]]. Como workaround se establece el [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Warning-Basics.html][nivel]] a error
+#+BEGIN_SRC emacs-lisp
+(setq warning-minimum-level :error)
+#+END_SRC 
 * Uso de paquetes
 
   Como todo gran sistema operativo, Emacs ha desarrollado desde las últimas versiones un sistema de paquetes que permite la instalación de extensiones desarrolladas por la comunidad.
@@ -96,19 +100,19 @@
 (package-initialize)
 
 
+;; Add another repos, so we can install use-package
+(unless (assoc-default "melpa" package-archives)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-
 ;; Ensure always the use of "use-package"
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-;; Add another repos
-(unless (assoc-default "melpa" package-archives)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+(setq package-enable-at-startup nil)
 
 #+END_SRC
 

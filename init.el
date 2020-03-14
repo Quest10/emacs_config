@@ -119,7 +119,7 @@
 (setq
    backup-by-copying t
    backup-directory-alist
-    '(("." . "~/Documents/bck-files/"))
+    '(("." . "~/.emacs.d/bck-files/"))
    delete-old-versions t
    kept-new-versions 6
    kept-old-versions 2
@@ -128,7 +128,7 @@
 ;; ajustes de autoguardados (#files#)
 (setq
    auto-save-file-name-transforms
-   `((".*", "~/Documents/bck-files/" t)))
+   `((".*", "~/.emacs.d/bck-files/" t)))
 
 ;; Set default bookmark file and auto-saving
 (setq bookmark-default-file "~/.emacs.d/bookmarks")

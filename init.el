@@ -176,6 +176,10 @@
  (sqlite . t)
  )
 
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
+
 ;; DOCKER (macrae)
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")

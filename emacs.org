@@ -322,8 +322,10 @@ Source:
   (sql . t)
   (sqlite . t)
   )
-
+  )
  #+END_SRC
+
+
 * Magit
   Emacs maneja el control de versiones de manera nativa. Sin embargo Magit es muy popular a la hora de manejar repositorios GIT.
 #+BEGIN_SRC emacs-lisp 

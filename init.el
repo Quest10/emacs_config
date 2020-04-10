@@ -175,6 +175,7 @@
  (sql . t)
  (sqlite . t)
  )
+ )
 
 (use-package magit
   :ensure t

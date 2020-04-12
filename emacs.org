@@ -333,6 +333,17 @@ Source:
   :ensure t
   :bind (("C-x g" . magit-status)))
 #+END_SRC
+* Autocompletado
+** IDO
+   Ref: https://www.masteringemacs.org/article/introduction-to-ido-mode
+#+BEGIN_SRC emacs-lisp
+(use-package ido
+  :config
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1))
+#+END_SRC
+
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
 ** Docker

@@ -5,3 +5,5 @@ history
 bookmarks
 elpa/*
 bck-files/*
+/ido.last
+/transient/

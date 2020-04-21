@@ -344,6 +344,7 @@ Source:
   :ensure t
   :bind (("C-x g" . magit-status)))
 #+END_SRC
+  Para ignorar un archivo modificado únicamente hay que pulsar i en la ventana que muestra los ficheros modificados. Muestra las distintas maneras en las que se puede ignorar un fichero en git
 * Autocompletado
 ** IDO
    Ref: https://www.masteringemacs.org/article/introduction-to-ido-mode

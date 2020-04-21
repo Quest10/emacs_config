@@ -177,6 +177,14 @@
  )
  )
 
+(use-package flycheck
+  :defer 2
+  :diminish
+  :init (global-flycheck-mode)
+  :custom
+  (flycheck-display-errors-delay .3)
+)
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)))

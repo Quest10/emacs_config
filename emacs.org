@@ -324,7 +324,18 @@ Source:
   )
   )
  #+END_SRC
+* Trabajando con lenguajes
+  Un comprobador sintáctico ahorra muchos lenguajes. Emacs trae integrado Flymake. Los lenguajes que más uso (YAML, Terraform ...) están soportados por [[https://www.flycheck.org/en/latest/languages.html#flycheck-languages][Flymcheck]] Este descarga la responsabilidad de los chequeos en linterns externos que han de ser instalados adicionalmente.
 
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :defer 2
+  :diminish
+  :init (global-flycheck-mode)
+  :custom
+  (flycheck-display-errors-delay .3)
+)
+#+END_SRC
 
 * Magit
   Emacs maneja el control de versiones de manera nativa. Sin embargo Magit es muy popular a la hora de manejar repositorios GIT.

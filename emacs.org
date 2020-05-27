@@ -336,7 +336,14 @@ Source:
   (flycheck-display-errors-delay .3)
 )
 #+END_SRC
-
+** YAML
+   Para tener resaltado sintactico hacemos uso de yaml-mode que al no venir de serie deberemos hacer uso de use-package
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+)
+#+END_SRC
+   Uno de los errores más típicos trabajando con yaml es el empleo de tabuladores en vez de espacio. Con este modo y flycheck habilitados este error queda claramente señalizado con una banda roja representando los tabuladores. Para sustituir estos tabuladores por espacio no hace falta instalar un paquete adicional. Emacs trae la utilidad untabify. Para usarlo sólo debemos seleccionar la región sobre la que queremos operar (C-x h para seleccionar todo el buffer) y ejecutar M-x untabify Este truco lo he encontrado en https://mdk.fr/blog/emacs-replace-tabs-with-spaces.html
 * Magit
   Emacs maneja el control de versiones de manera nativa. Sin embargo Magit es muy popular a la hora de manejar repositorios GIT.
 #+BEGIN_SRC emacs-lisp 

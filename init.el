@@ -185,6 +185,10 @@
   (flycheck-display-errors-delay .3)
 )
 
+(use-package yaml-mode
+  :ensure t
+)
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)))

@@ -41,6 +41,7 @@
 
 ;; carga de temas macrae
 (use-package doom-themes
+  :ensure t
   :after (spaceline)
   :init
   (setq
@@ -54,12 +55,14 @@
 
 ;; spaceline macrae
 (use-package spaceline
+  :ensure t
   :init
   (require 'spaceline-config)
   (spaceline-emacs-theme))
 
 
-  (use-package spaceline-all-the-icons
+(use-package spaceline-all-the-icons
+  :ensure t
   :after spaceline
   :config
   (spaceline-all-the-icons-theme)
@@ -73,6 +76,7 @@
 
 ;; iconitos (macrae)
 (use-package all-the-icons
+  :ensure t
   :init
   (cond
    ((string-equal system-type "gnu/linux")
@@ -85,6 +89,7 @@
       (all-the-icons-install-fonts "t")))))
 
 (use-package all-the-icons-dired
+  :ensure t
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
@@ -97,6 +102,7 @@
 
 ;; guias de indentacion (macrae)
 (use-package indent-guide
+  :ensure t
   :config
   (indent-guide-global-mode))
 
@@ -107,9 +113,10 @@
 ;; sidebar para dired
 (use-package dired-sidebar
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar))
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("<f3>" . dired-sidebar-toggle-sidebar)))
 
-(global-set-key (kbd "<f3>") 'dired-sidebar-toggle-sidebar)
+;; (global-set-key (kbd "<f3>") 'dired-sidebar-toggle-sidebar)
 
 ;; recuperación entre arranques
 (desktop-save-mode 1)
@@ -144,7 +151,7 @@
 (add-to-list 'org-structure-template-alist
              '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
 
-
+	     
 ;; ajustes estados TODO list
 (setq org-todo-keywords
   '(
@@ -178,6 +185,7 @@
  )
 
 (use-package flycheck
+  :ensure t
   :defer 2
   :diminish
   :init (global-flycheck-mode)
@@ -194,6 +202,7 @@
   :bind (("C-x g" . magit-status)))
 
 (use-package ido
+  :ensure t
   :config
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
@@ -201,10 +210,13 @@
 
 ;; DOCKER (macrae)
 (use-package dockerfile-mode
+  :ensure t
   :mode "\\Dockerfile\\'")
 
-(use-package docker-tramp)
+(use-package docker-tramp
+  :ensure t)
 (use-package docker
+  :ensure t
   :bind ("C-c d" . hydra-docker/body)
   :config
   (defhydra hydra-docker (:columns 5 :color blue)
@@ -218,6 +230,7 @@
 
 ;; K8S (macrae)
 (use-package kubernetes
+  :ensure t
   :bind ("C-c k" . hydra-kube/body)
   :commands (kubernetes-overview)
   :config

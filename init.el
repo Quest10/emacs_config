@@ -208,6 +208,10 @@
   (setq ido-everywhere t)
   (ido-mode 1))
 
+(use-package hydra
+  :ensure t
+)
+
 ;; DOCKER (macrae)
 (use-package dockerfile-mode
   :ensure t

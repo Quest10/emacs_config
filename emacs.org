@@ -377,6 +377,12 @@ Source:
 
 * Paquetes exóticos
   Aún por comprobar su funcionamiento (y utilidad)
+** Hydra
+#+BEGIN_SRC emacs-lisp
+(use-package hydra
+  :ensure t
+)
+#+END_SRC
 ** Docker
 
 #+BEGIN_SRC emacs-lisp 

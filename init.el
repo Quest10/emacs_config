@@ -79,13 +79,14 @@
   :ensure t
   :init
   (cond
-   ((string-equal system-type "gnu/linux")
-    (if (not
-      (file-exists-p (concat (getenv "HOME") "/.fonts/all-the-icons.ttf")))
-      (all-the-icons-install-fonts "t")))
-   ((string-equal system-type "darwin")
-     (if (not
-      (file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf")))
+  ((string-equal system-type "gnu/linux")
+  (unless (file-exists-p (concat (getenv "HOME") "/.fonts/all-the-icons.ttf"))
+      (let ((parent-directory (file-name-directory  (concat (getenv "HOME") "/.fonts/all-the-icons.ttf"))))
+	(unless (file-exists-p parent-directory)
+		 (make-directory parent-directory t)
+		 (all-the-icons-install-fonts "t")))))
+  ((string-equal system-type "darwin")
+  (unless (file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf"))
       (all-the-icons-install-fonts "t")))))
 
 (use-package all-the-icons-dired

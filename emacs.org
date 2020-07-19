@@ -182,14 +182,15 @@
     :ensure t
     :init
     (cond
-     ((string-equal system-type "gnu/linux")
-      (if (not
-	(file-exists-p (concat (getenv "HOME") "/.fonts/all-the-icons.ttf")))
-	(all-the-icons-install-fonts "t")))
-     ((string-equal system-type "darwin")
-       (if (not
-	(file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf")))
-	(all-the-icons-install-fonts "t")))))
+    ((string-equal system-type "gnu/linux")
+    (unless (file-exists-p (concat (getenv "HOME") "/.fonts/all-the-icons.ttf"))
+	(let ((parent-directory (file-name-directory  (concat (getenv "HOME") "/.fonts/all-the-icons.ttf"))))
+	  (unless (file-exists-p parent-directory)
+		   (make-directory parent-directory t)
+		   (all-the-icons-install-fonts "t")))))
+    ((string-equal system-type "darwin")
+    (unless (file-exists-p (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf"))
+        (all-the-icons-install-fonts "t")))))
 
   (use-package all-the-icons-dired
     :ensure t
@@ -445,7 +446,8 @@ Source:
    - ¿Cómo se mapea?
    - ¿Qué shell usar? eshell parece la más interesante pero no carga el perfil de bash. ¿Alguna forma de cargarlo?
    - ¿Cómo respetar la proporción de ventanas? ¿Se pueden guardar "diseños" de ventanas?
-** TODO Implementación de descarga e instalación de los paquetes si no están instalados (fonts hay que descargarlos a mano)
+** DONE Implementación de descarga e instalación de los paquetes si no están instalados (fonts hay que descargarlos a mano)
+   El uso de use-package con ensure garantiza la instalación de los paquetes instalados
 ** DONE Mapear tecla rápida para abrir/cerrar ventana de dired
 
 #+BEGIN_SRC emacs-lisp
@@ -456,6 +458,7 @@ Source:
 ** Configuraciones:
    - [[https://github.com/cmacrae/.emacs.d/][MacRae]]: Configuraciones para Mac y configuración de la apariencia moderna.
    - [[https://github.com/seth/my-emacs-dot-d][Seth]]: Ejemplo de configuración a partir de un init que interpreta el código en un archivo de org. Funciones interesantes como la de [[https://github.com/seth/my-emacs-dot-d/blob/master/emacs-init.org#magic-timestamps-sure-why-not][auto-timestamps]]
+   - [[https://github.com/patrickt/emacs][Patrickt]]: La línea de pensamiento que sigue es cercana. Se puede usar un gran porcentaje de su configuración.
 * Variables de personalización controladas por Emacs
   Emacs tiene un sistema de personalización mediante menús. Cuando este se usa, Emacs genera al final del archivo de configuración una entrada como la siguiente:
 #+HEADER: :tangle no

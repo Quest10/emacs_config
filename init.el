@@ -152,7 +152,7 @@
 (add-to-list 'org-structure-template-alist
              '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
 
-	     
+
 ;; ajustes estados TODO list
 (setq org-todo-keywords
   '(
@@ -185,6 +185,14 @@
  )
  )
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "pandoc"))
+
 (use-package flycheck
   :ensure t
   :defer 2
@@ -198,9 +206,22 @@
   :ensure t
 )
 
+(use-package hcl-mode
+  :ensure t
+  :mode ("\\.tf$" . hcl-mode)
+)
+
+(use-package ansible
+  :ensure t
+)
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)))
+
+(use-package forge
+  :ensure t
+)
 
 (use-package ido
   :ensure t

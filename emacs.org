@@ -3,6 +3,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="rethink.css" />
 #+OPTIONS: toc:nil num:nil html-style:nil
 
+
 * Programación literada
 
   Un poco de documentación en el inicio del archivo de carga. El enfoque literado sobre un archivo permite documentar mejor no sólo las funcionalidades sino el curso de los pensamientos del desarrollo. En este caso se parte de una copia de un archivo de configuración de emacs funcional. El objetivo es crear un archivo de org-mode que encapsule un archivo de configuración de emacs. La configuración inicial hace un uso intensivo, aunque no exclusivo, de la configuración empleada por [[ https://github.com/cmacrae/.emacs.d/][MacRae]]. Para la carga de esta configuración existen dos opciones:
@@ -279,22 +280,19 @@
 * Tomando notas
 ** OrgMode
 
- #+BEGIN_SRC emacs-lisp
- ;; ORG MODE
- (eval-after-load 'org
- '(progn
- (add-to-list 'org-structure-template-alist
-              '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
+#+BEGIN_SRC emacs-lisp
+;; Necesario para habilitar las antiguas plantillas
+;; Referencia: https://www.reddit.com/r/emacs/comments/ad68zk/get_easytemplates_back_in_orgmode_92/
+(require 'org-tempo)
 
-	     
- ;; ajustes estados TODO list
- (setq org-todo-keywords
-   '(
- (sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
- ;;(sequence "SENT" "APPROVED" "|" "PAID")
- ))
+;; Posibles ajustes de estados TODO list
+      (setq org-todo-keywords
+	'(
+      (sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
+      ;;(sequence "SENT" "APPROVED" "|" "PAID")
+      ))
 
- #+END_SRC
+#+END_SRC
 
 *** Ejecución de código: Babel
     OrgMode mediante Babel permite interpretar distintos [[https://orgmode.org/worg/org-contrib/babel/languages.html][lenguajes]]. Algunos lenguajes, como el propio emacs-lisp, vienen habilitados por defecto y no requieren de dependencias adicionales. Para habilitar otros lenguajes se incluye el siguiente código (y se revisan las dependencias que tiene cada lenguaje para su ejecución)
@@ -520,3 +518,5 @@
 (load custom-file)
 #+END_SRC
   
+
+

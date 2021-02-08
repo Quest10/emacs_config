@@ -146,19 +146,16 @@
 (bookmark-bmenu-list)
 (switch-to-buffer "*Bookmark List*")
 
-;; ORG MODE
-(eval-after-load 'org
-'(progn
-(add-to-list 'org-structure-template-alist
-             '("P" "#+TITLE:\n#+OPTIONS: toc:nil\n#+TAGS:\n\n? "))))
+;; Necesario para habilitar las antiguas plantillas
+;; Referencia: https://www.reddit.com/r/emacs/comments/ad68zk/get_easytemplates_back_in_orgmode_92/
+(require 'org-tempo)
 
-
-;; ajustes estados TODO list
-(setq org-todo-keywords
-  '(
-(sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
-;;(sequence "SENT" "APPROVED" "|" "PAID")
-))
+;; Posibles ajustes de estados TODO list
+      (setq org-todo-keywords
+	'(
+      (sequence "TODO" "DOING" "|" "TRANSFERED" "POSTPONED" "DONE" "CANCELED")
+      ;;(sequence "SENT" "APPROVED" "|" "PAID")
+      ))
 
 ;; inherit shell variables correctly
 ;; now we can load node fine

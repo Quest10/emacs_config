@@ -1,8 +1,12 @@
-;;Personal configuration for Emacs
-;;Gerardo Diez García
-;;2018-2020
+;;;Personal configuration for Emacs
+;;;Gerardo Diez García
+;;;2018-2020
 
 (setq warning-minimum-level :error)
+
+(when (and (equal emacs-version "27.2")
+           (eql system-type 'darwin))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 ;; Init use of package
 (require 'package)

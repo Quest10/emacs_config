@@ -78,9 +78,9 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;;Personal configuration for Emacs
-;;Gerardo Diez García
-;;2018-2020
+;;;Personal configuration for Emacs
+;;;Gerardo Diez García
+;;;2018-2020
 
 #+END_SRC
 
@@ -89,6 +89,14 @@
 #+BEGIN_SRC emacs-lisp
 (setq warning-minimum-level :error)
 #+END_SRC 
+
+* Configurando Emacs en función del OS
+  Debido al error descrito en [[https://github.com/Quest10/emacs_config/issues/6][el 6º issue]] del repo de GitHub se observa la necesidad de configurar ciertos aspectos en función del sistema operativo
+  #+begin_src emacs-lisp
+(when (and (equal emacs-version "27.2")
+           (eql system-type 'darwin))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+  #+end_src
 * Uso de paquetes
 
   Como todo gran sistema operativo, Emacs ha desarrollado desde las últimas versiones un sistema de paquetes que permite la instalación de extensiones desarrolladas por la comunidad. Apoyándose en las funcionalidades ofrecidas por esta gestión nativa de paquetes se ha creado el paquete "[[https://github.com/jwiegley/use-package][use-package]]".

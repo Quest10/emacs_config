@@ -376,6 +376,39 @@
       ))
 
 #+END_SRC
+*** Org-r[[id:D58FDFB9-86FD-4B4F-AFE5-331FEADA2EDE][imágenes_Docker]]oam
+    #+begin_src emacs-lisp
+	  (use-package org-roam
+	    :ensure t
+	    :init
+	    (setq org-roam-v2-ack t)
+	    :custom
+	    (org-roam-directory (file-truename "~/Documents/notes"))
+	    (org-roam-completion-everywhere t)
+	    (org-roam-db-autosync-mode)
+	    :bind (("C-c n l" . org-roam-buffer-toggle)
+		   ("C-c n f" . org-roam-node-find)
+		   ("C-c n i" . org-roam-node-insert)
+		   :map org-mode-map
+		   ("C-M-i"    . completion-at-point))
+	    :config
+	    (org-roam-setup))
+
+    #+end_src
+
+**** org-roam-ui
+     #+begin_src emacs-lisp
+       (use-package org-roam-ui
+	 :ensure t
+	 :after org-roam
+	 :config
+	  (setq org-roam-ui-sync-theme t
+		org-roam-ui-follow t
+		org-roam-ui-update-on-save t
+		org-roam-ui-open-on-start t))
+
+     #+end_src
+
 
 *** Ejecución de código: Babel
     OrgMode mediante Babel permite interpretar distintos [[https://orgmode.org/worg/org-contrib/babel/languages.html][lenguajes]]. Algunos lenguajes, como el propio emacs-lisp, vienen habilitados por defecto y no requieren de dependencias adicionales. Para habilitar otros lenguajes se incluye el siguiente código (y se revisan las dependencias que tiene cada lenguaje para su ejecución)

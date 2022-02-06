@@ -241,14 +241,15 @@
   :custom
   (org-roam-directory (file-truename "~/Documents/notes"))
   (org-roam-completion-everywhere t)
-  (org-roam-db-autosync-mode)
+
   :bind (("C-c n l" . org-roam-buffer-toggle)
 	 ("C-c n f" . org-roam-node-find)
 	 ("C-c n i" . org-roam-node-insert)
 	 :map org-mode-map
 	 ("C-M-i"    . completion-at-point))
   :config
-  (org-roam-setup))
+  (org-roam-setup)
+  (org-roam-db-autosync-mode))
 
 (use-package org-roam-ui
   :ensure t
@@ -256,8 +257,7 @@
   :config
    (setq org-roam-ui-sync-theme t
 	 org-roam-ui-follow t
-	 org-roam-ui-update-on-save t
-	 org-roam-ui-open-on-start t))
+	 org-roam-ui-update-on-save t))
 
 ;; inherit shell variables correctly
 ;; now we can load node fine
